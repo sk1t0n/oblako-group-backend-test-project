@@ -1,7 +1,7 @@
 AllCops:
+  NewCops: enable
   Exclude:
     - vendor/**/*
-    - bin/**/*
 
 Style/Documentation:
   Enabled: false
