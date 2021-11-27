@@ -1,29 +1,38 @@
 class TodoController < ApplicationController
-  protect_from_forgery except: :update
+  include Response
+  protect_from_forgery except: %i[create update]
+
+  def create
+    @todo = Todo.new(create_todo_params)
+
+    if @todo.save
+      created 'todo', @todo
+    else
+      bad_request
+    end
+  rescue StandardError
+    bad_request
+  end
 
   def update
     @todo = Todo.find(params[:id])
 
-    if @todo.update(todo_params)
-      respond_to do |format|
-        format.json { render json: { status: 200, todo: @todo } }
-      end
+    if @todo.update(update_todo_params)
+      ok 'todo', @todo
     else
-      returns_error
+      bad_request
     end
   rescue StandardError
-    returns_error
+    bad_request
   end
 
   private
 
-  def todo_params
-    params.require(:todo).permit(:text, :isCompleted)
+  def create_todo_params
+    params.require(:todo).permit(:text, :project_id)
   end
 
-  def returns_error
-    respond_to do |format|
-      format.json { render json: { status: 400 } }
-    end
+  def update_todo_params
+    params.require(:todo).permit(:text, :isCompleted)
   end
 end

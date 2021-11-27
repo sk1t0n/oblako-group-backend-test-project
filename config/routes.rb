@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root to: 'project#index', format: 'json'
 
   resources :projects, controller: 'project', format: 'json', only: :index do
-    resources :todos, controller: 'todo', format: 'json', only: :update
+    resources :todos, controller: 'todo', format: 'json', only: %i[create update]
   end
 end
