@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root to: 'project#index', format: 'json'
 
-  resources :projects, controller: 'project', format: 'json', only: :index do
+  resources :projects, controller: 'project', format: 'json', only: %w[index create] do
     resources :todos, controller: 'todo', format: 'json', only: %i[create update]
   end
 end
