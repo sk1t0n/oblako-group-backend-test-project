@@ -1,0 +1,12 @@
+AllCops:
+  Exclude:
+    - vendor/**/*
+    - bin/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+inherit_from: .rubocop_todo.yml
